@@ -77,9 +77,8 @@ while ((buf = aerovias.next())) {
   servicoAerovia.adicionarAerovia(aerovia);
 }
 
-console.log(servicoAeronave.todas());
-console.log(servicoAerovia.recupera("sao paulo", "rio de janeiro"));
-console.log(servicoPiloto.todos());
+const planoteste1 = new PlanoDeVoo('p02br', 'br01sprj', new Date(), new Date().getHours() + ':' + new Date().getMinutes(), 26000, [13, 14], false, 'BR022023')
+servicoPlano.adicionarPlano(planoteste1)
 
 let fim = false;
 while (!fim) {
@@ -116,8 +115,11 @@ while (!fim) {
             break;
       
           case "2":
+            console.log(servicoPiloto.todos())
             const matriculaPiloto = input("Matrícula do piloto:");
+            console.log(servicoAerovia.todas())
             const idAerovia = input("ID da aerovia:");
+            console.log(servicoAeronave.todas())
             const prefixoAeronave = input("Prefixo da aeronave:");
             const data = input("Data (digite como 12/11/2023, por exemplo):");
             const horario = input("Horário (digite como 13:14, por exemplo): ");
@@ -126,7 +128,7 @@ while (!fim) {
             const novoPlano = new PlanoDeVoo(
               matriculaPiloto,
               idAerovia,
-              data,
+              data,  
               horario,
               altitude,
               slots,
@@ -150,7 +152,9 @@ while (!fim) {
         break;
 
     case "4":
-      console.log(menu.listarPlanos());
+      console.log(menu.listarPlanos())
+      const id = input("Insira o ID do plano: ")
+      console.log(menu.listarPlano(id));
       break;
     case "5":
       console.log(menu.listarOcupacoes());
@@ -164,11 +168,3 @@ while (!fim) {
       fim = true;
   }
 }
-
-// console.log(servicoPiloto.todos())
-// console.log(servicoAeronave.todas()000)
-// const planoteste1 = new PlanoDeVoo('p02br', 'br01sprj', new Date(), new Date().getHours() + ':' + new Date().getMinutes(), 26000, [13, 14], false, 'BR022023')
-
-// export const ocupacao = new OcupacaoAerovia()
-// menuO.aprovarPlanoDeVoo(planoteste1)
-// console.log(menuO.listarOcupacoes())

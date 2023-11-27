@@ -20,8 +20,8 @@
         libera(idAerovia, data, altitude, slot) { // verificar posteriormente
             const aeroviaOcupada = {idAerovia: idAerovia, data: data, altitude: altitude, slots: slot}
             const index = this.#aeroviasOcupadas.indexOf(aeroviaOcupada)
-            if (index = -1) {
-                return 'Não há aerovia ocupada com esses dados'
+            if (index === -1) {
+                return null
             }
             return this.#aeroviasOcupadas.splice(index, 1)
         }
@@ -42,6 +42,9 @@
             for (let aerovia of this.aeroviasOcupadas) {
                 let string = `Aerovia - ID: ${aerovia.idAerovia}, Data: ${aerovia.data}, Altitude: ${aerovia.altitude}, Slots: ${aerovia.slots.join(",")}\n`;
                 aeroviaString += string;
+            }
+            if(!aeroviaString) {
+                return 'Não há ocupações'
             }
             return aeroviaString;
         }

@@ -26,11 +26,17 @@ export class Menu {
     listarPlanos() {
         return servicoPlano.todos()
     }
+    listarPlano(id) {
+        return servicoPlano.recupera(id)
+    }
     listarOcupacoes() {
         return ocupacao.listarOcupacoes()
     }
     cancelarPlano(idPlano) {
         const plano = servicoPlano.recuperaPlano(idPlano)
+        if(typeof plano === 'string') {
+            return plano
+        }
         ocupacao.libera(plano.idAerovia, plano.data, plano.altitude, plano.slots)
         plano.cancelado = true
         return `Plano de id :${plano.id} cancelado!`

@@ -8,8 +8,12 @@ export class ServicoPlanos {
   }
   todos() {
     let string = "";
+
     for (const plano of this.planos) {
       string += `${plano.toString()} \n`;
+    }
+    if( !string) {
+      return 'Não há planos!'
     }
     return string;
   }
@@ -64,6 +68,9 @@ export class ServicoPlanos {
     // A aeronave tem de ter autonomia para voar o trecho (a autonomia tem de ser 10%
     // maior que o tamanho da aerovia);
     const porcentagem = aerovia.tamanho * 0.1
+    console.log(aeronave.autonomia, 'autonomia aeronave')
+    console.log(aerovia.tamanho, 'aerovia tamanho')
+
     if(aeronave.autonomia + porcentagem < aerovia.tamanho) {
       return "A autonomia deve ser 10% maior que o tamanho da aerovia";
     }
