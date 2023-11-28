@@ -29,8 +29,11 @@ export class Menu {
     listarPlano(id) {
         return servicoPlano.recupera(id)
     }
-    listarOcupacoes() {
-        return ocupacao.listarOcupacoes()
+    listarPlanoData(data) { // 5
+        return ocupacao.planoPorData(data)
+    }
+    listarOcupacao(data, idAerovia) { // 6
+        return ocupacao.ocupacaoAeroviaData(data, idAerovia)
     }
     cancelarPlano(idPlano) {
         const plano = servicoPlano.recuperaPlano(idPlano)

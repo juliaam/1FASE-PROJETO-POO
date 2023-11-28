@@ -77,13 +77,22 @@ while ((buf = aerovias.next())) {
   servicoAerovia.adicionarAerovia(aerovia);
 }
 
-const planoteste1 = new PlanoDeVoo('p02br', 'br01sprj', new Date(), new Date().getHours() + ':' + new Date().getMinutes(), 26000, [13, 14], false, 'BR022023')
-servicoPlano.adicionarPlano(planoteste1)
+const planoteste1 = new PlanoDeVoo(
+  "p02br",
+  "br01sprj",
+  new Date(),
+  new Date().getHours() + ":" + new Date().getMinutes(),
+  26000,
+  3,
+  false,
+  "BR022023"
+);
+servicoPlano.adicionarPlano(planoteste1);
 
 let fim = false;
 while (!fim) {
   console.log(
-    "1- Listar Aerovias \n 2- Listar altitudes livres \n 3- Aprovar plano de voo \n 4- Listar Planos \n 5- Listar ocupação \n 6- Cancelar plano \n 0- sair"
+    "1- Listar Aerovias \n 2- Listar altitudes livres \n 3- Aprovar plano de voo \n 4- Listar plano por id \n 5- Listar planos por data \n 6-Listar a ocupação de uma aerovia por data \n 7- Cancelar plano \n 0- sair"
   );
   const inputReceived = input("Insira a opção selecionada: ");
   switch (inputReceived) {
@@ -96,71 +105,76 @@ while (!fim) {
       console.log(menu.listarAltitudesLivres());
       break;
 
-      case "3":
-        console.log(
-          "Digite 1 para escolher um plano de todos os planos criados\nDigite 2 para criar um novo plano\nDigite 0 para sair"
-        );
-        const input3 = input("Insira a opção selecionada: ");
-        switch (input3) {
-          case "1":
-            console.log(servicoPlano.todos());
-            const inputPlano = input("Digite o id do plano:");
-            const plano = servicoPlano.recuperaPlano(inputPlano)
-            const planoConsistente = servicoPlano.consiste(plano);
-            if (planoConsistente != true) {
-              console.log("Plano não consistente.");
-              break;
-            }
-            console.log(menu.aprovarPlanoDeVoo(planoConsistente));
+    case "3":
+      console.log(
+        "Digite 1 para escolher um plano de todos os planos criados\nDigite 2 para criar um novo plano\nDigite 0 para sair"
+      );
+      const input3 = input("Insira a opção selecionada: ");
+      switch (input3) {
+        case "1":
+          console.log(servicoPlano.todos());
+          const inputPlano = input("Digite o id do plano:");
+          const plano = servicoPlano.recuperaPlano(inputPlano);
+          const planoConsistente = servicoPlano.consiste(plano);
+          if (planoConsistente != true) {
+            console.log("Plano não consistente.");
             break;
-      
-          case "2":
-            console.log(servicoPiloto.todos())
-            const matriculaPiloto = input("Matrícula do piloto:");
-            console.log(servicoAerovia.todas())
-            const idAerovia = input("ID da aerovia:");
-            console.log(servicoAeronave.todas())
-            const prefixoAeronave = input("Prefixo da aeronave:");
-            const data = input("Data (digite como 12/11/2023, por exemplo):");
-            const horario = input("Horário (digite como 13:14, por exemplo): ");
-            const altitude = input("Altitude: ");
-            const slots = input("Quantidade de slots ocupados:");
-            const novoPlano = new PlanoDeVoo(
-              matriculaPiloto,
-              idAerovia,
-              data,  
-              horario,
-              altitude,
-              slots,
-              prefixoAeronave,
-            );
-      
-            const consiste = servicoPlano.consiste(novoPlano);
-            if (consiste !== true) {
-              console.log(consiste);
-              break;
-            }
-      
-            servicoPlano.adicionarPlano(novoPlano);
-            console.log(menu.aprovarPlanoDeVoo(novoPlano));
-            break;
-      
-          case "0":
-            fim = true;
-            break;
-        }
-        break;
+          }
+          console.log(menu.aprovarPlanoDeVoo(planoConsistente));
+          break;
 
-    case "4":
-      console.log(menu.listarPlanos())
-      const id = input("Insira o ID do plano: ")
+        case "2":
+          console.log(servicoPiloto.todos());
+          const matriculaPiloto = input("Matrícula do piloto:");
+          console.log(servicoAerovia.todas());
+          const idAerovia = input("ID da aerovia:");
+          console.log(servicoAeronave.todas());
+          const prefixoAeronave = input("Prefixo da aeronave:");
+          const data = input("Data (digite como 12/11/2023, por exemplo):");
+          const horario = input("Horário (digite como 13:14, por exemplo): ");
+          const altitude = input("Altitude: ");
+          const slots = input("Quantidade de slots ocupados:");
+          const novoPlano = new PlanoDeVoo(
+            matriculaPiloto,
+            idAerovia,
+            data,
+            horario,
+            altitude,
+            slots,
+            prefixoAeronave
+          );
+
+          const consiste = servicoPlano.consiste(novoPlano);
+          if (consiste !== true) {
+            console.log(consiste);
+            break;
+          }
+
+          servicoPlano.adicionarPlano(novoPlano);
+          console.log(menu.aprovarPlanoDeVoo(novoPlano));
+          break;
+
+        case "0":
+          fim = true;
+          break;
+      }
+      break;
+
+    case "4": // listar plano por id
+      const id = input("Insira o ID do plano: ");
       console.log(menu.listarPlano(id));
       break;
-    case "5":
-      console.log(menu.listarOcupacoes());
+    case "5": // listar plano previsto por uma data
+      const dataPlano = input("Insira a data(ex: 13/12/2023): ");
+      console.log(menu.listarPlanoData(dataPlano));
       break;
-    case "6":
-      console.log(ocupacao.listarOcupacoes())
+    case "6": // listar ocupacao de uma aerovia por data
+      const dataOcupacao = input("Insira a data(ex: 13/12/2023): ");
+      const idAerovia = input("ID da aerovia: ");
+      console.log(menu.listarOcupacao(dataOcupacao, idAerovia));
+      break;
+    case "7": // cancelar plano
+      console.log(ocupacao.listarOcupacoes());
       const planoCancelar = input("Insira o id do plano de voo:");
       console.log(menu.cancelarPlano(planoCancelar));
       break;

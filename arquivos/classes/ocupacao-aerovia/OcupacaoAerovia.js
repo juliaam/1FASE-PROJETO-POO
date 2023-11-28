@@ -1,8 +1,10 @@
+    import { servicoAerovia } from "../../../sistemadevoofase2.js"
     export class OcupacaoAerovia {
         #aeroviasOcupadas = []
         get aeroviasOcupadas() {
             return this.#aeroviasOcupadas
         }
+       
         altitudesOcupadas(idAerovia, data) { // faz um mapeamento das altitudes de aerovias ocupadas
             return this.#aeroviasOcupadas
             .filter(x => x.idAerovia === idAerovia && x.data === data)
@@ -40,11 +42,36 @@
         listarOcupacoes() {
             let aeroviaString = "";
             for (let aerovia of this.aeroviasOcupadas) {
-                let string = `Aerovia - ID: ${aerovia.idAerovia}, Data: ${aerovia.data}, Altitude: ${aerovia.altitude}, Slots: ${aerovia.slots.join(",")}\n`;
+                let string = `Aerovia - ID: ${aerovia.idAerovia}, Data: ${aerovia.data}, Altitude: ${aerovia.altitude}, Slots: ${aerovia.slots}\n`;
                 aeroviaString += string;
             }
             if(!aeroviaString) {
                 return 'Não há ocupações'
+            }
+            return aeroviaString;
+        }
+        planoPorData(data) {
+            let aeroviaString = "";
+            const aerovias = this.#aeroviasOcupadas.filter(x => x.data == data)
+            if(aerovias.length < 1) {
+                return 'Não há aerovias'
+            }
+            for (let aerovia of aerovias) {
+                const aeroviaObj = servicoAerovia.recuperaAerovia(aerovia.idAerovia)
+                let string = aeroviaObj.returnInfo();
+                aeroviaString += string;
+            }
+            return aeroviaString;
+        }
+        ocupacaoAeroviaData(data, idAerovia) {
+            let aeroviaString = "";
+            const ocupacaoes = this.#aeroviasOcupadas.filter(x => x.data === data &&  x.idAerovia === idAerovia)
+            if(ocupacaoes.length < 1 ) {
+                return 'Não há ocupações'
+            }
+            for (let aerovia of ocupacaoes) {
+                let string = `Aerovia - ID: ${aerovia.idAerovia}, Data: ${aerovia.data}, Altitude: ${aerovia.altitude}, Slots: ${aerovia.slots}\n`;
+                aeroviaString += string;
             }
             return aeroviaString;
         }

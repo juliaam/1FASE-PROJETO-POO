@@ -21,14 +21,14 @@ export class ServicoPlanos {
     this.#planos.push(planoDeVoo);
   }
   recuperaPlano(id) {
-    const plano = this.#planos.find((plano) => plano.id === id);
+    const plano = this.#planos.find((plano) => plano.id == id);
     if (plano) {
       return plano
     }
     return "Não foi possível encontrar um plano para esse id";
   }
   recupera(id) {
-    const plano = this.#planos.find((plano) => plano.id === id);
+    const plano = this.#planos.find((plano) => plano.id == id);
     if (plano) {
       return `ID: ${plano.id}, matricula do piloto: ${
         plano.matriculaPiloto
@@ -68,8 +68,6 @@ export class ServicoPlanos {
     // A aeronave tem de ter autonomia para voar o trecho (a autonomia tem de ser 10%
     // maior que o tamanho da aerovia);
     const porcentagem = aerovia.tamanho * 0.1
-    console.log(aeronave.autonomia, 'autonomia aeronave')
-    console.log(aerovia.tamanho, 'aerovia tamanho')
 
     if(aeronave.autonomia + porcentagem < aerovia.tamanho) {
       return "A autonomia deve ser 10% maior que o tamanho da aerovia";
